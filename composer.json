@@ -1,0 +1,32 @@
+{
+    "name": "heimrichhannot/contao-status_messages",
+    "description":"A general status message module for the frontend.",
+    "keywords":["contao", "message", "frontend", "module", "developer"],
+    "type": "contao-module",
+    "homepage":"https://github.com/heimrichhannot/contao-status_messages",
+    "license":"LGPL-3.0+",
+    "authors":[
+        {
+            "name":"Heimrich & Hannot",
+            "email":"digitales@heimrich-hannot.de",
+            "homepage":"http://www.heimrich-hannot.de",
+            "role":"Developer"
+        }
+    ],
+    "support":{
+        "issues":"https://github.com/heimrichhannot/contao-status_messages/issues"
+    },
+    "require": {
+        "contao/core": ">=3.2,<4-dev"
+    },
+    "autoload": {
+        "classmap": [""]
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "": "system/modules/status_messages"
+            }
+        }
+    }
+}

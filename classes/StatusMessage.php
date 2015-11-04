@@ -1,0 +1,156 @@
+<?php
+
+namespace HeimrichHannot\StatusMessages;
+
+use Haste\Data\Collection;
+use Haste\Data\Plain;
+
+class StatusMessage
+{
+	const GENERAL = 'general';
+
+	public static function addError($strMessage, $intModule = 0)
+	{
+		static::add($strMessage, 'MSG_ERROR', $intModule ?: static::GENERAL);
+	}
+
+	public static function addSuccess($strMessage, $intModule = 0)
+	{
+		static::add($strMessage, 'MSG_SUCCESS', $intModule);
+	}
+
+	public static function addInfo($strMessage, $intModule = 0)
+	{
+		static::add($strMessage, 'MSG_INFO', $intModule);
+	}
+
+	public static function addRaw($strMessage, $intModule = 0)
+	{
+		static::add($strMessage, 'MSG_RAW', $intModule);
+	}
+
+	public static function add($strMessage, $strType, $intModule)
+	{
+		if ($strMessage == '') {
+			return;
+		}
+
+		if (!in_array($strType, static::getTypes())) {
+			throw new \LogicException("Invalid message type $strType");
+		}
+
+		if (!is_array($_SESSION[$strType])) {
+			$_SESSION[$strType] = array();
+		}
+
+		if (!is_array($_SESSION[$strType][$intModule])) {
+			$_SESSION[$strType][$intModule] = array();
+		}
+
+		$_SESSION[$strType][$intModule][] = $strMessage;
+	}
+
+	public static function generate($intModuleId = 0, $blnSkipGeneral = false)
+	{
+		if (static::isEmpty($intModuleId)) {
+			return '';
+		}
+
+		$objModule = new ModuleStatusMessages(new \ModuleModel());
+		$objModule->type = 'status_messages';
+
+		return $objModule->generate(true, $intModuleId, $blnSkipGeneral);
+	}
+
+	public static function getAll($intVisibleModule = 0, $blnSkipGeneral = false)
+	{
+		$arrMessages = array();
+
+		foreach (static::getTypes() as $strType) {
+			if (empty($_SESSION[$strType])) {
+				continue;
+			}
+
+			foreach ($_SESSION[$strType] as $intModule => $arrTexts)
+			{
+				if ($intModule == $intVisibleModule || !$blnSkipGeneral && $intModule == static::GENERAL)
+				{
+					$strClass = strtolower(str_replace('_', '-', $strType));
+
+					$_SESSION[$strType][$intModule] = array_unique($_SESSION[$strType][$intModule]);
+
+					foreach ($arrTexts as $strMessage) {
+						$strFormatted = '';
+
+						if ($strType != 'MSG_RAW') {
+							$strFormatted = sprintf('<p class="%s">%s</p>%s', $strClass, $strMessage, "\n");
+						}
+
+						$arrMessages[] = new Plain(
+							$strMessage,
+							'',
+							array(
+								'type'      => $strType,
+								'class'     => $strClass,
+								'formatted' => $strFormatted
+							)
+						);
+					}
+				}
+			}
+		}
+
+		if (!$_POST) {
+			static::reset($intVisibleModule, $blnSkipGeneral);
+		}
+
+		return new Collection($arrMessages);
+	}
+
+	public static function reset($intVisibleModule, $blnSkipGeneral)
+	{
+		foreach (static::getTypes() as $strType) {
+			if (empty($_SESSION[$strType]))
+				continue;
+
+			foreach ($_SESSION[$strType] as $intModule => $arrTexts)
+			{
+				if ($intModule == $intVisibleModule || !$blnSkipGeneral && $intModule == static::GENERAL
+				)
+				{
+					unset($_SESSION[$strType][$intModule]);
+				}
+			}
+		}
+	}
+
+	public static function resetAll()
+	{
+		foreach (static::getTypes() as $strType) {
+			if (empty($_SESSION[$strType]))
+				continue;
+
+			foreach ($_SESSION[$strType] as $intModule => $arrTexts)
+			{
+				unset($_SESSION[$strType][$intModule]);
+			}
+		}
+	}
+
+	public static function isEmpty($intModule = 0)
+	{
+		foreach (static::getTypes() as $strType) {
+			if (empty($_SESSION[$strType][$intModule])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static function getTypes()
+	{
+		return array('MSG_ERROR', 'MSG_SUCCESS', 'MSG_INFO', 'MSG_RAW');
+	}
+
+}
