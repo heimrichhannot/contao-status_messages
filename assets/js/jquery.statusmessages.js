@@ -15,12 +15,17 @@
 
 					$this.find('[class*="msg-"]').each(function() {
 						var $message = $(this),
-							hasClassName = 'has-' + $message.attr('class').match(/msg-[^\s]+/)[0].replace('msg-', '');
+							type = $message.attr('class').match(/msg-[^\s]+/)[0].replace('msg-', ''),
+							hasClassName = 'has-' + type,
+							additionalClasses = $message.attr('class').replace('msg-' + type, '');
 
-						if ($globalMessages.find('.' + $message.attr('class') + ':contains(' + $message.text() + ')').length <= 0)
+						if ($globalMessages.find('.msg-' + type + ':contains("' + $message.text() + '")').length <= 0)
 						{
 							if (!$globalMessages.hasClass(hasClassName))
 								$globalMessages.addClass(hasClassName);
+
+							if (!$globalMessages.hasClass(additionalClasses))
+								$globalMessages.addClass(additionalClasses);
 
 							$globalMessages.prepend($message);
 						}
