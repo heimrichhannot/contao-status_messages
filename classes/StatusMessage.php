@@ -9,27 +9,27 @@ class StatusMessage
 {
 	const GENERAL = 'general';
 
-	public static function addError($strMessage, $intModule = 0)
+	public static function addError($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_ERROR', $intModule ?: static::GENERAL);
+		static::add($strMessage, 'MSG_ERROR', $intModule ?: static::GENERAL, $strClass);
 	}
 
-	public static function addSuccess($strMessage, $intModule = 0)
+	public static function addSuccess($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_SUCCESS', $intModule);
+		static::add($strMessage, 'MSG_SUCCESS', $intModule, $strClass);
 	}
 
-	public static function addInfo($strMessage, $intModule = 0)
+	public static function addInfo($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_INFO', $intModule);
+		static::add($strMessage, 'MSG_INFO', $intModule, $strClass);
 	}
 
-	public static function addRaw($strMessage, $intModule = 0)
+	public static function addRaw($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_RAW', $intModule);
+		static::add($strMessage, 'MSG_RAW', $intModule, $strClass);
 	}
 
-	public static function add($strMessage, $strType, $intModule)
+	public static function add($strMessage, $strType, $intModule, $strClass)
 	{
 		if ($strMessage == '') {
 			return;
@@ -47,7 +47,10 @@ class StatusMessage
 			$_SESSION[$strType][$intModule] = array();
 		}
 
-		$_SESSION[$strType][$intModule][] = $strMessage;
+		$_SESSION[$strType][$intModule][] = array(
+			'text' => $strMessage,
+			'class' => $strClass
+		);
 	}
 
 	public static function generate($intModuleId = 0, $blnSkipGeneral = false)
@@ -79,15 +82,16 @@ class StatusMessage
 
 					$_SESSION[$strType][$intModule] = array_unique($_SESSION[$strType][$intModule]);
 
-					foreach ($arrTexts as $strMessage) {
+					foreach ($arrTexts as $arrMessage) {
 						$strFormatted = '';
 
 						if ($strType != 'MSG_RAW') {
-							$strFormatted = sprintf('<p class="%s">%s</p>%s', $strClass, $strMessage, "\n");
+							$strFormatted = sprintf('<p class="%s">%s</p>%s',
+									$strClass . ($arrMessage['class'] ? ' ' . $arrMessage['class'] : ''), $arrMessage['text'], "\n");
 						}
 
 						$arrMessages[] = new Plain(
-							$strMessage,
+							$arrMessage['text'],
 							'',
 							array(
 								'type'      => $strType,

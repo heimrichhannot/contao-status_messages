@@ -15,7 +15,7 @@
 
 					$this.find('[class*="msg-"]').each(function() {
 						var $message = $(this),
-							hasClassName = 'has-' + $message.attr('class').replace('msg-', '');
+							hasClassName = 'has-' + $message.attr('class').match(/msg-[^\s]+/)[0].replace('msg-', '');
 
 						if ($globalMessages.find('.' + $message.attr('class') + ':contains(' + $message.text() + ')').length <= 0)
 						{
