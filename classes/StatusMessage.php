@@ -144,7 +144,7 @@ class StatusMessage
 	public static function isEmpty($intModule = 0)
 	{
 		foreach (static::getTypes() as $strType) {
-			if (empty($_SESSION[$strType][$intModule])) {
+			if (!empty($_SESSION[$strType][$intModule])) {
 				return false;
 			}
 		}
