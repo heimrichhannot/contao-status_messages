@@ -17,7 +17,8 @@
         "issues":"https://github.com/heimrichhannot/contao-status_messages/issues"
     },
     "require": {
-        "contao/core": ">=3.2,<4-dev"
+        "contao/core": ">=3.2,<4-dev",
+        "codefog/contao-haste" : ">=4.0,<5-dev"
     },
     "autoload": {
         "classmap": [""]
@@ -30,3 +31,4 @@
         }
     }
 }
+
