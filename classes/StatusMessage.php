@@ -111,7 +111,7 @@ class StatusMessage
 		return new Collection($arrMessages);
 	}
 
-	public static function reset($intVisibleModule, $blnSkipGeneral)
+	public static function reset($intVisibleModule, $blnSkipGeneral=false)
 	{
 		foreach (static::getTypes() as $strType) {
 			if (empty($_SESSION[$strType]))
