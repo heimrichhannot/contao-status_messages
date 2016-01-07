@@ -86,7 +86,7 @@ class StatusMessage
 						$strFormatted = '';
 
 						if ($strType != 'MSG_RAW') {
-							$strFormatted = sprintf('<p class="%s">%s</p>%s',
+							$strFormatted = sprintf('<p class="%s" role="alert">%s</p>%s',
 									$strClass . ($arrMessage['class'] ? ' ' . $arrMessage['class'] : ''), $arrMessage['text'], "\n");
 						}
 
