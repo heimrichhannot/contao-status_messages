@@ -24,8 +24,9 @@
 							if (!$globalMessages.hasClass(hasClassName))
 								$globalMessages.addClass(hasClassName);
 
-							if (!$globalMessages.hasClass(additionalClasses))
-								$globalMessages.addClass(additionalClasses);
+							// commented due to formhybrid
+							//if (!$globalMessages.hasClass(additionalClasses))
+							//	$globalMessages.addClass(additionalClasses);
 
 							$globalMessages.prepend($message);
 						}
