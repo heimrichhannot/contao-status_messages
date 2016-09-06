@@ -104,9 +104,7 @@ class StatusMessage
 			}
 		}
 
-		if (!$_POST) {
-			static::reset($intVisibleModule, $blnSkipGeneral);
-		}
+		static::reset($intVisibleModule, $blnSkipGeneral);
 
 		return new Collection($arrMessages);
 	}
