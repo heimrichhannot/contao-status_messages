@@ -1,6 +1,6 @@
 {
     "name": "heimrichhannot/contao-status_messages",
-    "description":"A general status message module for the frontend.",
+    "description":"A general status message bundle for the frontend.",
     "keywords":["contao", "message", "frontend", "module", "developer"],
     "type": "contao-bundle",
     "homepage":"https://github.com/heimrichhannot/contao-status_messages",

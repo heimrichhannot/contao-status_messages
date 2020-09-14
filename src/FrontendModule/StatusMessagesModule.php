@@ -10,7 +10,6 @@ class StatusMessagesModule extends Module
 {
 
 	protected $strTemplate = 'mod_status_messages';
-	protected $blnGlobal;
 	protected $intModuleId;
 	protected $blnSkipGeneral;
 
@@ -37,8 +36,16 @@ class StatusMessagesModule extends Module
 	}
 
 	protected function compile() {
-		$this->Template->messages = StatusMessage::getAll($this->intModuleId, $this->blnSkipGeneral);
-
+	    $messages = StatusMessage::getAll($this->intModuleId, $this->blnSkipGeneral);
+	    if (!empty($messages)) {
+            $this->Template->messagesRaw = $messages;
+            $formatted = '';
+            foreach ($messages as $message) {
+                $formatted .= $message->formatted ?: $message->text;
+            }
+            $this->Template->messages = $formatted;
+        }
         $GLOBALS['TL_JAVASCRIPT']['huh_statusmessages'] = 'bundles/heimrichhannotstatusmessages/assets/js/status_messages.js|static';
+	    ;
 	}
 }

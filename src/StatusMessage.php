@@ -50,6 +50,7 @@ class StatusMessage
 
 	public static function generate($intModuleId = 0, $blnSkipGeneral = false)
 	{
+
 		if (static::isEmpty($intModuleId)) {
 			return '';
 		}
@@ -60,6 +61,11 @@ class StatusMessage
 		return $objModule->generate(true, $intModuleId, $blnSkipGeneral);
 	}
 
+    /**
+     * @param int $intVisibleModule
+     * @param false $blnSkipGeneral
+     * @return array|\stdClass[]
+     */
 	public static function getAll($intVisibleModule = 0, $blnSkipGeneral = false): array
 	{
         $session = System::getContainer()->get('session');
@@ -77,7 +83,7 @@ class StatusMessage
             $strClass = strtolower(str_replace('_', '-', $strType));
             $arrMessages = $flashBag->get(static::getFlashBagKey($strType, $intVisibleModule));
             if (!$blnSkipGeneral) {
-                $arrMessage = array_merge($arrMessages, $flashBag->get(static::getFlashBagKey($strType, static::GENERAL)) ?: []);
+                $arrMessages = array_merge($arrMessages, $flashBag->get(static::getFlashBagKey($strType, static::GENERAL)) ?: []);
             }
 
             foreach (array_unique($arrMessages) as $arrMessage)
@@ -90,7 +96,7 @@ class StatusMessage
                 }
 
                 $message = new \stdClass();
-                $message->message = $arrMessage['text'];
+                $message->text = $arrMessage['text'];
                 $message->type = $strType;
                 $message->class = $strClass;
                 $message->formatted = $strFormatted;
@@ -145,11 +151,11 @@ class StatusMessage
 
         foreach (static::getTypes() as $strType) {
             if ($flashBag->has(static::getFlashBagKey($strType, $intModule))) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
 	}
 
 	public static function getTypes()
