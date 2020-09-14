@@ -2,7 +2,10 @@
 
 namespace HeimrichHannot\StatusMessages;
 
-class ModuleStatusMessages extends \Module
+use Contao\BackendTemplate;
+use Contao\Module;
+
+class StatusMessagesModule extends Module
 {
 
 	protected $strTemplate = 'mod_status_messages';
@@ -13,12 +16,12 @@ class ModuleStatusMessages extends \Module
 	public function generate($blnLocal = false, $intModuleId = 0, $blnSkipGeneral = false)
 	{
 		if (TL_MODE == 'BE') {
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### STATUS MESSAGES ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $this->name;
-			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+			$objTemplate->href = 'contao?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
 			return $objTemplate->parse();
 		}
@@ -34,5 +37,7 @@ class ModuleStatusMessages extends \Module
 
 	protected function compile() {
 		$this->Template->messages = StatusMessage::getAll($this->intModuleId, $this->blnSkipGeneral);
+
+        $GLOBALS['TL_JAVASCRIPT']['huh_statusmessages'] = 'bundles/heimrichhannotstatusmessages/assets/js/status_messages.js|static';
 	}
 }

@@ -3,7 +3,7 @@
 /**
  * Frontend modules
  */
-$GLOBALS['FE_MOD']['miscellaneous']['status_messages'] = 'HeimrichHannot\StatusMessages\ModuleStatusMessages';
+$GLOBALS['FE_MOD']['miscellaneous']['status_messages'] = \HeimrichHannot\StatusMessages\StatusMessagesModule::class;
 
 /**
  * Javascript
