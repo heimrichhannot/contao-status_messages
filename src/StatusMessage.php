@@ -4,6 +4,7 @@ namespace HeimrichHannot\StatusMessages;
 
 use Contao\ModuleModel;
 use Contao\System;
+use HeimrichHannot\StatusMessages\FrontendModule\StatusMessagesModule;
 
 class StatusMessage
 {
@@ -76,7 +77,7 @@ class StatusMessage
             $strClass = strtolower(str_replace('_', '-', $strType));
             $arrMessages = $flashBag->get(static::getFlashBagKey($strType, $intVisibleModule));
             if (!$blnSkipGeneral) {
-                $arrMessage = array_merge($arrMessage, $flashBag->get(static::getFlashBagKey($strType, static::GENERAL)));
+                $arrMessage = array_merge($arrMessages, $flashBag->get(static::getFlashBagKey($strType, static::GENERAL)) ?: []);
             }
 
             foreach (array_unique($arrMessages) as $arrMessage)

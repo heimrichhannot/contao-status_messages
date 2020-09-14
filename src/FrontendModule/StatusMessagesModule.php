@@ -1,9 +1,10 @@
 <?php
 
-namespace HeimrichHannot\StatusMessages;
+namespace HeimrichHannot\StatusMessages\FrontendModule;
 
 use Contao\BackendTemplate;
 use Contao\Module;
+use HeimrichHannot\StatusMessages\StatusMessage;
 
 class StatusMessagesModule extends Module
 {

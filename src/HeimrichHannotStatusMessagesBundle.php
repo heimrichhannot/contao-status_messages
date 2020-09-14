@@ -12,7 +12,9 @@
 namespace HeimrichHannot\StatusMessages;
 
 
-class HeimrichHannotStatusMessagesBundle
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class HeimrichHannotStatusMessagesBundle extends Bundle
 {
 
 }
