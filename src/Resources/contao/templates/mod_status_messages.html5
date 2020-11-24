@@ -6,7 +6,9 @@
 <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif; ?>
 
-<?php echo $this->messages; ?>
+<?php $this->block('messages'); ?>
+    <?php echo $this->messages; ?>
+<?php $this->endblock(); ?>
 
 </div>
 <!-- indexer::continue -->

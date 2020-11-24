@@ -8,26 +8,31 @@ use HeimrichHannot\StatusMessages\FrontendModule\StatusMessagesModule;
 
 class StatusMessage
 {
-	const GENERAL = 'general';
+    const GENERAL      = 'general';
 
-	public static function addError($strMessage, $intModule = 0, $strClass = '')
+    const TYPE_ERROR   = 'MSG_ERROR';
+    const TYPE_SUCCESS = 'MSG_SUCCESS';
+    const TYPE_INFO    = 'MSG_INFO';
+    const TYPE_RAW     = 'MSG_RAW';
+
+    public static function addError($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_ERROR', $intModule ?: static::GENERAL, $strClass);
+		static::add($strMessage, static::TYPE_ERROR, $intModule ?: static::GENERAL, $strClass);
 	}
 
 	public static function addSuccess($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_SUCCESS', $intModule, $strClass);
+		static::add($strMessage, self::TYPE_SUCCESS, $intModule, $strClass);
 	}
 
 	public static function addInfo($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_INFO', $intModule, $strClass);
+		static::add($strMessage, self::TYPE_INFO, $intModule, $strClass);
 	}
 
 	public static function addRaw($strMessage, $intModule = 0, $strClass = '')
 	{
-		static::add($strMessage, 'MSG_RAW', $intModule, $strClass);
+		static::add($strMessage, self::TYPE_RAW, $intModule, $strClass);
 	}
 
 	public static function add($strMessage, $strType, $intModule, $strClass)
@@ -48,17 +53,32 @@ class StatusMessage
         ]);
 	}
 
-	public static function generate($intModuleId = 0, $blnSkipGeneral = false)
+    /**
+     * Generate messages for given context
+     *
+     * Options:
+     * * module: (array) Used as row for the ModuleModel passed to the StatusMessagesModule which is used to generate the messages. You can set for example customTpl to use a custom template.
+     *
+     * @param int|string $context A module id or other identifiert to group the messages
+     * @param false $blnSkipGeneral Skip general messages
+     * @param array $options Add additional options
+     * @return string
+     */
+	public static function generate($context = 0, $blnSkipGeneral = false, array $options = [])
 	{
 
-		if (static::isEmpty($intModuleId)) {
+		if (static::isEmpty($context)) {
 			return '';
 		}
 
-		$objModule = new StatusMessagesModule(new ModuleModel());
+        $moduleModel     = new ModuleModel();
+		if (isset($options['module']) && is_array($options['module'])) {
+		    $moduleModel->setRow($options['module']);
+        }
+        $objModule       = new StatusMessagesModule($moduleModel);
 		$objModule->type = 'status_messages';
 
-		return $objModule->generate(true, $intModuleId, $blnSkipGeneral);
+		return $objModule->generate(true, $context, $blnSkipGeneral);
 	}
 
     /**
@@ -90,7 +110,7 @@ class StatusMessage
             {
                 $strFormatted = '';
 
-                if ($strType != 'MSG_RAW') {
+                if ($strType != self::TYPE_RAW) {
                     $strFormatted = sprintf('<div class="%s" role="alert">%s</div>%s',
                         $strClass . ($arrMessage['class'] ? ' ' . $arrMessage['class'] : ''), $arrMessage['text'], "\n");
                 }
@@ -160,7 +180,7 @@ class StatusMessage
 
 	public static function getTypes()
 	{
-		return array('MSG_ERROR', 'MSG_SUCCESS', 'MSG_INFO', 'MSG_RAW');
+		return array(self::TYPE_ERROR, self::TYPE_SUCCESS, self::TYPE_INFO, self::TYPE_RAW);
 	}
 
     /**

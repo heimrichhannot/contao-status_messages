@@ -4,6 +4,14 @@ A general status message module for the frontend.
 
 ## Usage
 
+### Install
+
+1. Install with composer or contao manager
+
+    ```composer require heimrichhannot/contao-status_messages```
+    
+1. Update database
+
 ### In a module
 
 Simply add the following to your template:

@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2020-11-24
+- added block to module templates
+- added constants for message types
+- added options parameter to StatusMessage::generate() to pass configuration to the Module
+
 ## [2.0.0] - 2020-09-14
 - move to bundle structure
 - replace session handling with symfony flashbag handling
