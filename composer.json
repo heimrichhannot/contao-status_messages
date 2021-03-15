@@ -18,7 +18,10 @@
     },
     "require": {
         "php": "^7.2",
-        "contao/core-bundle": "^4.4"
+        "contao/core-bundle": "^4.4",
+        "psr/container": "^1.0|^2.0",
+        "symfony/dependency-injection": "^3.4|^4.4",
+        "symfony/config": "^3.4|^4.4"
     },
     "autoload": {
         "psr-4": {

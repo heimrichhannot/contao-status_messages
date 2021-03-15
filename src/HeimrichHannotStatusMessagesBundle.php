@@ -12,9 +12,14 @@
 namespace HeimrichHannot\StatusMessages;
 
 
+use HeimrichHannot\StatusMessages\DependencyInjection\StatusMessagesExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class HeimrichHannotStatusMessagesBundle extends Bundle
 {
+    public function getContainerExtension()
+    {
+        return new StatusMessagesExtension();
+    }
 
 }

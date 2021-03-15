@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2021-03-15
+- upgraded asset build workflow to encore
+- added encore bundle support
+- added FrontendAsset services/class
+- updated dependencies
+
 ## [2.1.0] - 2020-11-24
 - added block to module templates
 - added constants for message types

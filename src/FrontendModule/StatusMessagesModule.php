@@ -4,6 +4,8 @@ namespace HeimrichHannot\StatusMessages\FrontendModule;
 
 use Contao\BackendTemplate;
 use Contao\Module;
+use Contao\System;
+use HeimrichHannot\StatusMessages\Asset\FrontendAsset;
 use HeimrichHannot\StatusMessages\StatusMessage;
 
 class StatusMessagesModule extends Module
@@ -45,7 +47,8 @@ class StatusMessagesModule extends Module
             }
             $this->Template->messages = $formatted;
         }
-        $GLOBALS['TL_JAVASCRIPT']['huh_statusmessages'] = 'bundles/heimrichhannotstatusmessages/assets/js/status_messages.js|static';
+
+	    System::getContainer()->get(FrontendAsset::class)->addFrontendAssets();
 	    ;
 	}
 }
