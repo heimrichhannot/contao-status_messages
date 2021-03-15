@@ -2,6 +2,10 @@
 
 A general status message module for the frontend.
 
+## Features
+- use same functionality as contao message class in the frontend
+- [Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle) support
+
 ## Usage
 
 ### Install
