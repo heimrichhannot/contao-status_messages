@@ -20,7 +20,7 @@ class FrontendAsset implements ServiceSubscriberInterface
     /**
      * @var ContainerInterface
      */
-    protected ContainerInterface $container;
+    protected $container;
 
     public function __construct(ContainerInterface $container)
     {
