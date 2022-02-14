@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] - 2022-02-14
+
+- Changed: min. version for contao is 4.9
+- Added: symfony deps
+
 ## [2.3.0] - 2021-08-31
 
 - Added: support for php 8
