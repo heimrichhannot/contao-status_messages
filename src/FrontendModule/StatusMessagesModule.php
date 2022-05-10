@@ -49,6 +49,5 @@ class StatusMessagesModule extends Module
         }
 
 	    System::getContainer()->get(FrontendAsset::class)->addFrontendAssets();
-	    ;
 	}
 }

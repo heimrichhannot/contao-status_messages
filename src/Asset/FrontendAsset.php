@@ -12,8 +12,9 @@
 namespace HeimrichHannot\StatusMessages\Asset;
 
 
+use HeimrichHannot\EncoreBundle\Asset\FrontendAsset as EncoreFrontendAsset;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class FrontendAsset implements ServiceSubscriberInterface
 {
@@ -32,15 +33,15 @@ class FrontendAsset implements ServiceSubscriberInterface
     {
         $GLOBALS['TL_JAVASCRIPT']['huh_statusmessages'] = 'bundles/heimrichhannotstatusmessages/assets/contao-status-messages.js|static';
 
-        if ($this->container->has('HeimrichHannot\EncoreBundle\Asset\FrontendAsset')) {
-            $this->container->get(\HeimrichHannot\EncoreBundle\Asset\FrontendAsset::class)->addActiveEntrypoint('contao-status-messages');
+        if (class_exists(EncoreFrontendAsset::class) && $this->container->has(EncoreFrontendAsset::class)) {
+            $this->container->get(EncoreFrontendAsset::class)->addActiveEntrypoint('contao-status-messages');
         }
     }
 
     public static function getSubscribedServices()
     {
         return [
-            '?HeimrichHannot\EncoreBundle\Asset\FrontendAsset'
+            '?'.EncoreFrontendAsset::class
         ];
     }
 }

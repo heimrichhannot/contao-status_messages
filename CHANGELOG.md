@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.1] - 2022-05-10
+- Fixed: symfony 5 compatibility
+
 ## [2.4.0] - 2022-02-14
 
 - Changed: min. version for contao is 4.9
