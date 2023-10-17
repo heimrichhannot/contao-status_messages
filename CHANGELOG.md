@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0] - 2023-10-17
+- Changed: adjust for encore contracts
+
 ## [2.4.1] - 2022-05-10
 - Fixed: symfony 5 compatibility
 

@@ -5,3 +5,5 @@ services:
 
   HeimrichHannot\StatusMessages\Asset\FrontendAsset:
     public: true
+
+  HeimrichHannot\StatusMessages\Asset\EncoreExtension: ~

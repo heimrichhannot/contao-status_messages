@@ -18,32 +18,12 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class StatusMessagesExtension extends Extension implements PrependExtensionInterface
+class StatusMessagesExtension extends Extension
 {
 
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-    }
-
-    public function prepend(ContainerBuilder $container)
-    {
-        if ($container->hasExtension('huh_encore')) {
-            $config = [
-                'js_entries' => [
-                    [
-                        'name' => 'contao-status-messages',
-                        'file' => 'vendor/heimrichhannot/contao-status_messages/src/Resources/assets/js/status_messages.js'
-                    ]
-                ],
-                'unset_global_keys' => [
-                    'js' => [
-                        'huh_statusmessages',
-                    ]
-                ]
-            ];
-            $container->prependExtensionConfig('huh_encore', $config);
-        }
     }
 }
